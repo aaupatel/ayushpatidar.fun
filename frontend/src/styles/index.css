@@ -1,1 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
 @import "tailwindcss";
+
+:root {
+    --neon-green: #00FF41;
+    --dark-bg: #0a0a0a;
+}
+
+body {
+    background-color: var(--dark-bg);
+    font-family: 'JetBrains Mono', monospace;
+    color: white;
+}
