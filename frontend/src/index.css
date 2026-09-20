@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== LIGHT THEME — warm developer-editor workspace ===== */
+:root {
+  /* Layered surfaces */
+  --terminal-bg: #eef0f3;
+  --terminal-panel: #f7f8fa;
+  --terminal-elevated: #ffffff;
+  --terminal-border: #d1d5dd;
+  --terminal-hover: #e8eaf0;
+
+  /* Stronger border for emphasis elements */
+  --border-strong: #b8bec9;
+
+  /* Text hierarchy */
+  --terminal-text: #16181c;
+  --terminal-dim: #475569;
+  --terminal-muted: #8b94a3;
+
+  /* Semantic accents */
+  --terminal-green: #0b7a42;
+  --terminal-blue: #0967d2;
+  --terminal-amber: #b76b00;
+  --terminal-red: #c53030;
+  --terminal-accent: #0967d2;
+
+  /* Soft accent for subtle backgrounds/tints */
+  --accent-soft: rgba(9, 103, 210, 0.08);
+  --surface-hover: var(--terminal-hover);
+
+  /* Background treatment */
+  --grid-color: rgba(15, 23, 42, 0.025);
+  --noise-opacity: 0.012;
+  --glow: rgba(9, 103, 210, 0.05);
+  --selection-bg: rgba(9, 103, 210, 0.16);
+
+  /* Semantic aliases */
+  --surface: var(--terminal-panel);
+  --surface-elevated: var(--terminal-elevated);
+  --border: var(--terminal-border);
+  --text: var(--terminal-text);
+  --text-secondary: var(--terminal-dim);
+  --text-muted: var(--terminal-muted);
+  --accent: var(--terminal-accent);
+  --accent-secondary: var(--terminal-green);
+  --success: var(--terminal-green);
+  --warning: var(--terminal-amber);
+
+  /* Color scheme */
+  color-scheme: light;
+}
+
+/* ===== DARK THEME — deep developer-workspace ===== */
+.dark {
+  /* Layered surfaces */
+  --terminal-bg: #0a0b0d;
+  --terminal-panel: #121417;
+  --terminal-elevated: #1a1d22;
+  --terminal-border: #242830;
+  --terminal-hover: #1c2025;
+
+  /* Stronger border for emphasis elements */
+  --border-strong: #363b45;
+
+  /* Text hierarchy */
+  --terminal-text: #d8dee8;
+  --terminal-dim: #8b95a5;
+  --terminal-muted: #5c6675;
+
+  /* Semantic accents */
+  --terminal-green: #3fb950;
+  --terminal-blue: #58a6ff;
+  --terminal-amber: #d29922;
+  --terminal-red: #f85149;
+  --terminal-accent: #5e9eff;
+
+  /* Soft accent for subtle backgrounds/tints */
+  --accent-soft: rgba(94, 158, 255, 0.10);
+  --surface-hover: var(--terminal-hover);
+
+  /* Background treatment */
+  --grid-color: rgba(94, 158, 255, 0.022);
+  --noise-opacity: 0.015;
+  --glow: rgba(94, 158, 255, 0.06);
+  --selection-bg: rgba(94, 158, 255, 0.20);
+
+  /* Semantic aliases */
+  --surface: var(--terminal-panel);
+  --surface-elevated: var(--terminal-elevated);
+  --border: var(--terminal-border);
+  --text: var(--terminal-text);
+  --text-secondary: var(--terminal-dim);
+  --text-muted: var(--terminal-muted);
+  --accent: var(--terminal-accent);
+  --accent-secondary: var(--terminal-green);
+  --success: var(--terminal-green);
+  --warning: var(--terminal-amber);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.15;
+  font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 600;
+}
+
+h1 {
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  letter-spacing: -0.015em;
+}
+
+p {
+  line-height: 1.65;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background: var(--selection-bg);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--terminal-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--terminal-border);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-muted);
+}
+
+:focus-visible {
+  outline: 2px solid var(--terminal-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@layer components {
+  .mono {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', Menlo, Consolas, monospace;
+  }
+  .text-glow {
+    text-shadow: 0 0 10px var(--glow);
+  }
+  .panel {
+    background-color: var(--terminal-panel);
+    border: 1px solid var(--terminal-border);
+  }
+  .panel-elevated {
+    background-color: var(--terminal-elevated);
+    border: 1px solid var(--terminal-border);
+  }
+  .terminal-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--terminal-border) transparent;
+  }
+}
+
+.cursor-custom-active,
+.cursor-custom-active * {
+  cursor: none !important;
+}
+
+.noise-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.scanlines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 3px
+  );
+}
+
+@media (max-width: 640px) {
+  .mono {
+    font-size: 13px;
+  }
+}

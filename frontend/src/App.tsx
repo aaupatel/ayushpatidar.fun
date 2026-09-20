@@ -1,46 +1,74 @@
-import Home from "./pages/Home";
-// import { useState } from "react";
-// import TerminalLoader from "./components/TerminalLoader";
-// import Navbar from "./components/Navbar";
-// import About from "./pages/About";
-// import Work from "./pages/Work";
+import { useEffect, useState } from 'react';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { ThemeProvider } from '@/hooks/ThemeContext';
+import { Background } from '@/components/ui/Background';
+import { Cursor } from '@/components/ui/Cursor';
+import { ScrollProgress } from '@/components/ui/ScrollProgress';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/ui/Footer';
+import { TerminalLoader } from '@/components/terminal/TerminalLoader';
+import { MatrixOverlay } from '@/components/ui/MatrixOverlay';
+import { AIAssistant } from '@/components/assistant/AIAssistant';
+import { HomePage } from '@/pages/HomePage';
+import { AboutPage } from '@/pages/AboutPage';
+import { ProjectsPage } from '@/pages/ProjectsPage';
+import { LabPage } from '@/pages/LabPage';
+import { ContactPage } from '@/pages/ContactPage';
 
-// type View = "home" | "about" | "work";
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function Shell({ matrix, onMatrix }: { matrix: boolean; onMatrix: () => void }) {
+  return (
+    <>
+      <ScrollToTop />
+      <Background />
+      <Cursor />
+      <ScrollProgress />
+      <Navbar />
+      {matrix && <MatrixOverlay onClose={onMatrix} />}
+      <main className="relative z-10">
+        <Routes>
+          <Route path="/" element={<HomePage onMatrix={onMatrix} />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/lab" element={<LabPage onMatrix={onMatrix} />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<HomePage onMatrix={onMatrix} />} />
+        </Routes>
+      </main>
+      <Footer />
+      <AIAssistant />
+    </>
+  );
+}
 
 function App() {
-  // const [view, setView] = useState<View>("home");
-  // const [isNavigating, setIsNavigating] = useState(true);
-  // const [terminalMode, setTerminalMode] = useState<View>("home");
+  const [booted, setBooted] = useState(false);
+  const [matrix, setMatrix] = useState(false);
 
-  // const handleNavigation = (target: View) => {
-  //   if (target === view) return; // Don't reload same page
-  //   setTerminalMode(target);
-  //   setIsNavigating(true);
-  //   setView(target);
-  // };
+  useEffect(() => {
+    if (booted) {
+      document.documentElement.classList.add('dark');
+      const stored = localStorage.getItem('ayush-theme');
+      if (stored === 'light') document.documentElement.classList.remove('dark');
+    }
+  }, [booted]);
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-green-500 selection:text-black">
-      <Home/>
-      {/* {isNavigating && (
-        <TerminalLoader
-          // mode={terminalMode === "home" ? "initial" : terminalMode}
-          onFinished={() => setIsNavigating(false)}
-        />
-      )}
-
-      <div className="max-w-5xl mx-auto px-6">
-        <Navbar onNavigate={handleNavigation} /> 
-
-        {!isNavigating && (
-          <div className="pb-20">
-            {view === "home" && <Home />}
-            {view === "about" && <About />}
-            {view === "work" && <Work />}
-          </div>
+    <ThemeProvider>
+      <HashRouter>
+        {!booted && <TerminalLoader onDone={() => setBooted(true)} />}
+        {booted && (
+          <Shell matrix={matrix} onMatrix={() => setMatrix((m) => !m)} />
         )}
-      </div> */}
-    </div>
+      </HashRouter>
+    </ThemeProvider>
   );
 }
 
