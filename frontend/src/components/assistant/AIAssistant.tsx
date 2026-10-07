@@ -15,22 +15,24 @@ const ENTRANCE_MS = 1300;
 const STAND_UP_MS = 1250;
 const STAND_UP_FALLBACK_MS = 2200;
 
-const WIDTH_MOBILE = 90;
-const HEIGHT_MOBILE = 135;
-const MARGIN_DESKTOP = 2;
-const MARGIN_MOBILE = 1;
+const WIDTH_MOBILE = 52;
+const HEIGHT_MOBILE = 78;
+const MARGIN_DESKTOP = 5;
+const MARGIN_MOBILE = 4;
 
-const DESKTOP_HEIGHT_RATIO = 0.34;
-const DESKTOP_HEIGHT_MIN = 200;
-const DESKTOP_HEIGHT_MAX = 320;
+const DESKTOP_HEIGHT_RATIO = 0.15;
+const DESKTOP_HEIGHT_MIN = 110;
+const DESKTOP_HEIGHT_MAX = 135;
 const DESKTOP_ASPECT = 0.66;
 
 const CHAT_GAP = 12;
 
-const FRAME_FILL_DESKTOP = 0.9;
+const FRAME_FILL_DESKTOP = 0.87;
 const FRAME_SAFETY_DESKTOP = 1.08;
 const FRAME_FILL_MOBILE = 0.82;
 const FRAME_SAFETY_MOBILE = 1.12;
+const FRAME_BOTTOM_PAD_DESKTOP = 0.06;
+const FRAME_BOTTOM_PAD_MOBILE = 0.04;
 
 const MODEL_PATH = '/assets/models/AssistantAIModel.glb';
 const MODEL_SCALE = 1;
@@ -304,8 +306,15 @@ function CameraFramer({
     const distanceForWidth = safeWidth / 2 / tanH;
     const distance = Math.max(distanceForHeight, distanceForWidth) / fill;
 
-    camera.position.set(center.x, center.y, center.z + distance);
-    camera.lookAt(center);
+    // Frame the box horizontally centred but anchored near the bottom edge: the
+    // seated pose reaches lower than the standing pose, so keeping the box
+    // midpoint centred would let the lowest pose graze the canvas bottom.
+    const pad = boxSize.y * (isMobile ? FRAME_BOTTOM_PAD_MOBILE : FRAME_BOTTOM_PAD_DESKTOP);
+    const halfVisible = distance * tanV;
+    const targetY = center.y - boxSize.y / 2 + halfVisible - pad;
+
+    camera.position.set(center.x, targetY, center.z + distance);
+    camera.lookAt(center.x, targetY, center.z);
     camera.updateMatrixWorld();
   });
 
