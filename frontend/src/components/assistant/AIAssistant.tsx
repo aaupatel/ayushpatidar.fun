@@ -166,7 +166,7 @@ function HumanoidModel({ onLoad }: { onLoad: (api: ModelAPI) => void }) {
     const frameSize = new THREE.Vector3();
     frameBox.getSize(frameSize);
 
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.log('[AIAssistant] NEW MODEL READY:', {
         model: 'friendly_sci-fi_robot_with_animations.glb',
         originalSize: {
