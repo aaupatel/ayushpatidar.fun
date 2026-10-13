@@ -2,7 +2,6 @@ import { useEffect, useRef, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ArrowRight } from 'lucide-react';
 import { profile } from '@/data/profile';
-import { LazyHero3D } from '@/components/3d/LazyHero3D';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const EXPLORE_TARGETS = [
@@ -96,12 +95,26 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right: 3D architecture visualization */}
-        <div className="relative h-[220px] sm:h-[280px] md:h-[380px] lg:h-[480px] order-2 min-w-0 overflow-hidden rounded-lg border border-terminal-border/40">
-          <div className="absolute top-2.5 left-3 z-10 mono text-[9px] text-terminal-dim/40 tracking-wider pointer-events-none select-none">
-            system-graph
+        {/* Right: profile portrait - animated GIF when motion OK, static image for reduced motion or GIF error */}
+        <div className="relative order-2 min-w-0 flex items-center justify-center lg:justify-start">
+          <div className="relative w-full mx-auto lg:mx-0">
+            {reduced ? (
+              <img
+                src="/profile.png"
+                alt="Ayush Patidar"
+                className="block w-full h-auto object-contain"
+                loading="eager"
+              />
+            ) : (
+              <img
+                src="/assets/HeroLoopVideo.gif"
+                alt=""
+                aria-hidden="true"
+                className="block w-full h-auto object-contain"
+                loading="eager"
+              />
+            )}
           </div>
-          <LazyHero3D />
         </div>
       </div>
 
